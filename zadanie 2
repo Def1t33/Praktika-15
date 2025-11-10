@@ -1,0 +1,67 @@
+namespace zadanie2
+{
+    
+    internal class Program
+    {
+        interface Ionoff
+        {
+            void On();
+            void Off();
+        }
+        interface Ilevel
+        {
+            void SetLevel(int level);
+        }
+        class Lamp: Ionoff, Ilevel
+        {
+            public int Level { get; set; }
+            public void On()
+            {
+                Level = 100;
+                Console.WriteLine("ЛАмпа включается");
+                Info();
+            }
+            public void Off()
+            {
+                Level = 0;
+                Console.WriteLine("ЛАмпа выключается");
+                Info();
+            }
+            public void SetLevel(int level)
+            {
+                if (level < 0 || level > 100)
+                {
+                    Console.WriteLine("Некорректное значение");
+                }
+                else Level = level;
+            }
+            public void Info() {
+                Console.WriteLine($"Текущий уровень лампы {Level}");
+            }
+            
+        }
+        class Ventilator: Ionoff
+        {
+            public void On()
+            {
+                Console.WriteLine("Вентилятор включился");
+            }
+            public void Off()
+            {
+                Console.WriteLine("Вентилятор выключился");
+            }
+        }
+        static void Main(string[] args)
+        {
+            Lamp SpartakLampa = new Lamp();
+            Ionoff[] qwe = { SpartakLampa, new Ventilator() };
+            foreach (Ionoff q in qwe)
+            {
+                q.On();
+                q.Off();
+            }
+            SpartakLampa.SetLevel(30);
+            SpartakLampa.Info();
+        }
+    }
+}
