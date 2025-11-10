@@ -1,0 +1,67 @@
+namespace zadanie_5
+{
+    internal class Program
+    {
+        interface IBankAccount
+        {
+            void Deposit(double amount);
+            void Withdraw(double amount);
+        }
+        interface ITransfer
+        {
+            void Transfer(BankAccount bankAccount, double amount);
+        }
+        class BankAccount : ITransfer, IBankAccount
+        {
+            public double Balance { get; set; }
+            public BankAccount(int balance)
+            {
+                Balance = balance;
+            }
+            public void Deposit(double amount)
+            {
+                Balance += amount;
+                Console.WriteLine($"Вы положили {amount} рублей на счёт");
+            }
+            public void Withdraw(double amount)
+            {
+                if (Balance < amount) Console.WriteLine("На счету не достаточно средств");
+                else
+                {
+                    Balance -= amount;
+                    Console.WriteLine($"Вы сняли {amount} рублей со счёта");
+                }
+            }
+            public void Transfer(BankAccount bankAccount, double amount)
+            {
+                if (Balance >= amount)
+                {
+                    Balance -= amount;
+                    bankAccount.Balance += amount;
+                }
+                else Console.WriteLine("На счету недостаточно средств");
+            }
+            public void CheckBalance()
+            {
+                if (Balance > 0) Console.WriteLine("На счету хватает средств");
+            }
+        }
+        static void Main(string[] args)
+        {
+            BankAccount[] accs = { new BankAccount(4000), new BankAccount(3000) };
+            for (int i = 0; i < accs.Length; i++)
+            {
+                Console.WriteLine($"Баланс {i + 1} аккаунта: {accs[i].Balance}");
+            }
+            accs[0].Transfer(accs[1], 2000);
+            for (int i = 0; i < accs.Length; i++)
+            {
+                Console.WriteLine($"Баланс {i + 1} аккаунта: {accs[i].Balance}");
+            }
+            Console.ReadLine();
+
+
+
+        }
+    }
+}
