@@ -1,0 +1,38 @@
+namespace zadanie_4
+{
+    internal class Program
+    {
+        interface IAttacker
+        {
+            void Attack();
+        }
+        interface IHealer
+        {
+            void Heal();
+        }
+        class Warrior : IAttacker
+        {
+            public void Attack() { Console.WriteLine("Воин атакует!"); }
+        }
+        class Mage : IAttacker, IHealer
+        {
+            public void Attack() { Console.WriteLine("Маг атакует!"); }
+            public void Heal() { Console.WriteLine("Маг хилит!"); }
+        }
+        static void Main(string[] args)
+        {
+            Warrior warrior = new Warrior();
+            Mage mage = new Mage();
+            IAttacker[] attackers = { warrior, mage };
+            foreach (IAttacker attacker in attackers)
+            {
+                attacker.Attack();
+            }
+            mage.Heal();
+            Console.WriteLine();
+        }
+        
+
+        
+    }
+}
